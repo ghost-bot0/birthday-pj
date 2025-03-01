@@ -1,0 +1,502 @@
+/* =====================
+   GENERAL / GLOBAL
+===================== */
+body {
+  margin: 0;
+  padding: 0;
+  background: #000; /* Black background */
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+#container {
+  position: relative;
+  z-index: 10; /* Main interactive content on top */
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Ensure inactive scenes don't capture clicks */
+.scene {
+  pointer-events: none;
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 1s;
+  opacity: 0;
+  z-index: 10;
+}
+.scene.active {
+  pointer-events: auto;
+  display: block;
+  opacity: 1;
+}
+
+/* =====================
+   FESTIVE LIGHTS (Old Style, No Border)
+===================== */
+.festive-lights {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Full viewport height so lights on top, bottom & vertical sides show */
+  pointer-events: none;
+  z-index: 5;
+}
+.festive-lights .light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /* Enhanced glow effect */
+  box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.8);
+  animation: blink 2s infinite alternate;
+}
+@keyframes blink {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+/* =====================
+   BACKGROUND DECOR: STARS & (Optional) Additional Fairy Lights
+===================== */
+.background-decor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.stars::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  background: white;
+  box-shadow: 
+    20px 30px white,
+    50px 80px white,
+    100px 50px white,
+    150px 120px white,
+    200px 70px white,
+    250px 200px white,
+    300px 100px white,
+    350px 150px white,
+    400px 90px white,
+    450px 130px white,
+    500px 60px white,
+    550px 110px white,
+    600px 30px white,
+    650px 180px white,
+    700px 90px white;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+.fairy-lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.fairy-lights .light {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffea00;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #ffea00;
+  animation: blink 3s infinite ease-in-out;
+  animation-delay: var(--delay);
+}
+
+/* =====================
+   SECTION 1: OPENING SCENE (Houses)
+===================== */
+#opening-scene {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+.background {
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+.house {
+  width: 120px;
+  height: 120px;
+  background: url("images/house.png") no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.house:hover {
+  transform: scale(1.05);
+}
+#house-left { left: 15%; }
+#house-middle { left: 45%; }
+#house-right { left: 75%; }
+#instruction {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #fff; /* White text for readability on black */
+}
+
+/* =====================
+   SECTION 2: CHIBI GREETING
+===================== */
+#chibi-greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+#chibi {
+  width: 150px;
+  animation: fadeIn 1s;
+}
+#greeting-text {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #fff;
+}
+.response-buttons {
+  margin-top: 20px;
+}
+.response-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+}
+#greeting-response {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #fcfcfc;
+}
+
+/* =====================
+   SECTION 3: PLAYFUL BUTTON
+===================== */
+#playful-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  z-index: 10;
+}
+#teasing-button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+#button-response {
+  margin-top: 20px;
+  font-size: 1.1em;
+  text-align: center;
+  color: #fff;
+}
+
+/* =====================
+   SECTION 4: GUESS THE SURPRISE
+===================== */
+#guess-surprise {
+  text-align: center;
+  padding-top: 50px;
+  z-index: 10;
+  color: #fff;
+}
+#surprise-options {
+  display: inline-block;
+}
+.surprise-btn {
+  margin: 10px;
+  padding: 10px 15px;
+  font-size: 1em;
+  cursor: pointer;
+}
+#surprise-feedback {
+  margin-top: 20px;
+  min-height: 40px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* =====================
+   SECTION 5: QUIZ
+===================== */
+#quiz-section {
+  padding: 20px;
+  text-align: center;
+  z-index: 10;
+  color: #fff;
+}
+.question {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.options button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+/* Centered Chibi Thinking Bubble for Quiz Responses */
+#chibi-thinking {
+  position: absolute;
+  top: 60%; /* Positioned a little low in the center */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  z-index: 11;
+}
+#quiz-chibi {
+  width: 80px;
+  height: auto;
+}
+#thinking-bubble {
+  max-width: 60%;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.5s;
+  color: #000; /* Black text inside bubble for contrast */
+}
+#thinking-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  border-width: 10px 10px 0 10px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* =====================
+   SECTION 6: FINAL MESSAGE & CAKE
+===================== */
+#final-message {
+  text-align: center;
+  padding: 20px;
+  z-index: 10;
+}
+/* Code-style Box for Final Birthday Message */
+.code-box {
+  background: #222; /* Slightly lighter than black for contrast */
+  color: #dcdcdc;
+  font-family: "Courier New", Courier, monospace;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #524e4e;
+  margin: 0 auto 20px auto;
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+  overflow: auto;
+}
+#final-text {
+  font-size: 1.2em;
+  white-space: pre-wrap;
+  min-height: 200px;
+}
+#final-options button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+#cake-container {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+}
+#birthday-cake {
+  width: 300px;
+  transition: transform 0.2s;
+}
+#birthday-cake:hover {
+  transform: scale(1.02);
+}
+#candles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: transparent;
+  animation: flicker 1.5s infinite alternate;
+}
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+#final-feedback {
+  margin-top: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  min-height: 40px;
+  color: #fff;
+}
+
+/* Final Chibi with Speech Bubble */
+#final-chibi-container {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#final-chibi {
+  width: 80px;
+  height: auto;
+}
+#final-chibi-bubble {
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+  position: relative;
+  display: inline-block;
+  color: #000;
+}
+#final-chibi-bubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent #fff transparent transparent;
+}
+
+/* =====================
+   TYPING ANIMATION: Blinking Cursor
+===================== */
+@keyframes blinkCursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background: #fff; /* White cursor for contrast on dark background */
+  margin-left: 2px;
+  animation: blinkCursor 0.8s infinite;
+}
+
+/* =====================
+   CONFECTION EFFECT (Confetti)
+===================== */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: red; /* default; overridden in JS */
+  opacity: 0.8;
+  animation: confetti-fall 2.5s linear forwards;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
+
+/* =====================
+   ANIMATIONS
+===================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Shake animation for the funny option */
+.shake {
+  animation: shake 0.5s;
+}
+@keyframes shake {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(5px,0); }
+  50% { transform: translate(-5px,0); }
+  75% { transform: translate(5px,0); }
+  100% { transform: translate(0,0); }
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 600px) {
+  .house {
+    width: 80px;
+    height: 80px;
+  }
+  #chibi {
+    width: 100px;
+  }
+  #birthday-cake {
+    width: 200px;
+  }
+  .response-buttons button,
+  #teasing-button,
+  .surprise-btn {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+  #final-chibi {
+    width: 60px;
+  }
+  #final-chibi-bubble {
+    font-size: 0.9em;
+    padding: 8px;
+  }
+}
