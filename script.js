@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       question: "What’s something I would NEVER do?",
       options: [
-        { text: "Ignore your texts", response: "See? I’m not like you, leaving me on read 😌" },
+        { text: "Ignore your texts", response: "Well! Well! That's True 😌" },
         { text: "Say no to good food", response: "Unless it’s karela, then it’s a hard pass 🤢" },
         { text: "Stop teasing you", response: "That would be boring, right? 😏" },
         { text: "Dance in public", response: "Yeah… that’s never happening 😂" },
@@ -236,12 +236,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function startFinalMessage() {
     const message =
-      "Happy Birthday, Rekha!\n" +
-      "I was going to make this message longer, but then I remembered… you left me on seen.\n" +
-      "Still, since I’m a great person, I’ll let it slide this time.\n" +
-      "Wishing you an amazing year ahead filled with happiness, success, and all the things you love.\n" +
-      "Have a fantastic birthday!\n" +
-      "Also, I’ll be in Delhi on 11th — belated birthday coffee?";
+      "I really like you, and I wanna share my future with you!\n" +
+      "The more I talk to you, the more I keep falling for you.\n" +
+      "We already play as a good duo in games, and just like I protect you in game, I wanna protect you in real life as well.\n" +
+      " And I wanna ask you properly.. Will you be my Girlfriend ?";
     finalTextDiv.textContent = "";
     // Use the typeMessage function for realistic typing (in a code-style box)
     typeMessage(finalTextDiv, message, 50, () => {
